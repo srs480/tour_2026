@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>রাঙ্গামাটি ও কাপ্তাই লেক ট্যুর 2026</title>
+<!-- FONTS: Hind Siliguri supports Bengali + Latin -->
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['"Hind Siliguri"','sans-serif']}}}}</script>
+<style>
+  body{background:#020617;color:#e2e8f0}
+  .glass{background:rgba(255,255,255,.05);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1)}
+  .input{width:100%;background:rgba(2,6,23,.6);border:1px solid rgba(255,255,255,.12);border-radius:.75rem;padding:.75rem 1rem;color:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+  .input:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.25)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:9999px;padding:.85rem 1.75rem;font-weight:600;transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:focus-visible,.input:focus-visible{outline:2px solid #5eead4;outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- ============ 1. HERO SECTION ============ -->
+<!-- BACKGROUND IMAGE: replace the URL in the <img> below with your Kaptai/Rangamati photo -->
+<header class="relative h-screen min-h-[600px] flex items-center justify-center text-center overflow-hidden">
+  <img src="https://picsum.photos/seed/kaptai-lake/1920/1080" alt="কাপ্তাই লেক" class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950"></div>
+  <div class="relative z-10 max-w-4xl px-5">
+    <!-- OFFICIAL BADGE: edit text -->
+    <span class="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm text-emerald-300 mb-6">
+      <i data-lucide="badge-check" class="w-4 h-4"></i> অফিসিয়াল এক্সপেডিশন ২০২৬
+    </span>
+    <!-- HEADLINE: edit text -->
+    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">মেঘ, পাহাড় আর শান্ত লেকের বুকে তাঁবু বাস — রাঙ্গামাটি ও কাপ্তাই লেক ট্যুর 2026</h1>
+    <div class="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
+      <!-- CTA 1: scrolls to the form (id="registration-form") -->
+      <a href="#registration-form" class="btn bg-emerald-500 text-slate-950 hover:shadow-[0_0_30px_rgba(16,185,129,.5)]">সিট বুক করুন</a>
+      <!-- CTA 2: scrolls to the timeline -->
+      <a href="#highlights" class="btn glass text-white">মূল আকর্ষণ দেখুন</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 2. DAY-TO-NIGHT TIMELINE ============ -->
+<section id="highlights" class="py-20 px-5 max-w-5xl mx-auto">
+  <div class="text-center mb-14">
+    <h2 class="text-3xl sm:text-4xl font-bold text-white">এক নজরে মূল আকর্ষণ</h2>
+    <!-- SUBTITLE: edit text -->
+    <p class="mt-3 text-slate-400">রাতের যাত্রা থেকে ভোরের আলো, আবার ক্যাম্পফায়ারের উষ্ণতায় — পুরো সফরের ধাপে ধাপে রূপ।</p>
+  </div>
+  <!-- Timeline is generated from the array in the script at the bottom (const TIMELINE). Edit time/text/icon/gradient there. -->
+  <ol id="timeline" class="relative space-y-8 before:absolute before:left-5 md:before:left-1/2 before:top-0 before:bottom-0 before:w-px before:bg-gradient-to-b before:from-indigo-500 before:via-emerald-400 before:to-indigo-500"></ol>
+</section>
+
+<!-- ============ 3. STICKY STACKING CARDS ============ -->
+<section id="spots" class="py-20 px-5 max-w-5xl mx-auto">
+  <h2 class="text-3xl sm:text-4xl font-bold text-white text-center mb-14">যা যা দেখব</h2>
+  <!-- Cards generated from const SPOTS in the script: edit image URL, description and YouTube video ID there. -->
+  <div id="cards" class="pb-10"></div>
+</section>
+
+<!-- VIDEO MODAL: iframe src is set from the clicked card's "video" ID -->
+<div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4" role="dialog" aria-modal="true" aria-label="ভিডিও">
+  <div class="relative w-full max-w-3xl">
+    <button id="video-close" class="absolute -top-12 right-0 btn glass !p-2 text-white" aria-label="বন্ধ করুন"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div class="aspect-video rounded-2xl overflow-hidden bg-black">
+      <iframe id="video-frame" class="w-full h-full" src="" title="YouTube video" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. PRICING & EXCLUSIONS ============ -->
+<section id="pricing" class="py-20 px-5 max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
+  <!-- PRICE CARD: edit price text -->
+  <div class="rounded-3xl p-8 text-center bg-gradient-to-br from-emerald-500/25 to-teal-500/10 border border-emerald-400/30 flex flex-col justify-center">
+    <p class="text-5xl sm:text-6xl font-bold text-white">জন প্রতি ৩০০০/- টাকা</p>
+    <a href="#registration-form" class="btn mt-8 bg-emerald-500 text-slate-950 mx-auto hover:shadow-[0_0_30px_rgba(16,185,129,.5)]">এখনই রেজিস্ট্রেশন সম্পন্ন করুন</a>
+  </div>
+  <!-- EXCLUSIONS CARD: edit list items -->
+  <div class="glass rounded-3xl p-8">
+    <h3 class="text-xl font-semibold text-rose-300 mb-5">❌ যা প্যাকেজের অন্তর্ভুক্ত নয়:</h3>
+    <ul class="space-y-3 text-lg">
+      <li>★ হাইওয়ে ফুড</li>
+      <li>★ ব্যক্তিগত খরচ</li>
+      <li>★ প্যাকেজে উল্লেখ নেই—এমন যেকোনো খরচ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5. OUR TEAM ============ -->
+<section id="team" class="py-20 px-5 max-w-5xl mx-auto">
+  <h2 class="text-3xl sm:text-4xl font-bold text-white text-center mb-12">Our TEAM</h2>
+  <!-- Members are generated from const TEAM in the script. To add member 2, 3...: copy the sample object in the comment there. -->
+  <div id="team-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center"></div>
+</section>
+
+<!-- ============ 6. REGISTRATION FORM (Google Form backend) ============ -->
+<section id="registration-form" class="py-20 px-5 max-w-2xl mx-auto scroll-mt-4">
+  <div class="glass rounded-3xl p-6 sm:p-10 shadow-2xl shadow-emerald-900/20">
+    <h2 class="text-3xl font-bold text-white text-center mb-2">সিট বুকিং ফর্ম</h2>
+    <p class="text-center text-slate-400 mb-8">সব তথ্য সঠিকভাবে পূরণ করুন।</p>
+
+    <!--
+      HOW TO CONNECT GOOGLE FORM:
+      1) In your Google Form, click "Get pre-filled link", fill every field with dummy text, copy the link.
+      2) Each "entry.1234567" in that link is a field ID. Replace the entry.XXXXXX in each input's name="" below.
+      3) Paste the form URL (ending in /formResponse) into GOOGLE_FORM_URL in the script at the bottom.
+    -->
+    <form id="booking-form" class="space-y-5">
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Full Name (বিশ্ববিদ্যালয়ের তথ্য অনুযায়ী)</span>
+        <!-- entry ID: Full Name -->
+        <input class="input" name="entry.XXXXXX01" required placeholder="আপনার পূর্ণ নাম"></label>
+
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Student ID</span>
+        <!-- entry ID: Student ID -->
+        <input class="input" name="entry.XXXXXX02" required placeholder="যেমন: 253-35-058"></label>
+
+      <fieldset><legend class="mb-1.5 text-sm text-slate-300">Section</legend>
+        <!-- entry ID: Section (both radios share the same name) -->
+        <div class="flex gap-3">
+          <label class="glass rounded-xl px-5 py-2.5 cursor-pointer has-[:checked]:border-emerald-400 has-[:checked]:text-emerald-300"><input type="radio" name="entry.XXXXXX03" value="A" required class="mr-2 accent-emerald-500">A</label>
+          <label class="glass rounded-xl px-5 py-2.5 cursor-pointer has-[:checked]:border-emerald-400 has-[:checked]:text-emerald-300"><input type="radio" name="entry.XXXXXX03" value="B" class="mr-2 accent-emerald-500">B</label>
+        </div></fieldset>
+
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Phone Number</span>
+        <!-- entry ID: Phone -->
+        <input class="input" type="tel" name="entry.XXXXXX04" required placeholder="01XXXXXXXXX"></label>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Preferred Tentmate Name</span>
+          <!-- entry ID: Tentmate name -->
+          <input class="input" name="entry.XXXXXX05" placeholder="টেন্টমেটের নাম"></label>
+        <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Preferred Tentmate Student ID</span>
+          <!-- entry ID: Tentmate ID -->
+          <input class="input" name="entry.XXXXXX06" placeholder="যেমন: 253-35-059"></label>
+      </div>
+
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Emergency Contact Person's Number</span>
+        <!-- entry ID: Emergency contact -->
+        <input class="input" name="entry.XXXXXX07" required placeholder="যেমন: 018XXXXXXXX-ABBU/AMMU"></label>
+
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Payment Method <span class="text-emerald-300">(bKash/Nagad Cash In = 01754675865)</span></span>
+        <!-- entry ID: Payment method. Option values are what Google Form receives; keep them identical to your form's choices -->
+        <select class="input" name="entry.XXXXXX08" required>
+          <option value="" disabled selected>পেমেন্ট মাধ্যম বেছে নিন</option>
+          <option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Cash">Cash</option>
+        </select></label>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Payment Transaction ID (TrxID)</span>
+          <!-- entry ID: TrxID -->
+          <input class="input" name="entry.XXXXXX09" placeholder="যেমন: 9A7B6C5D4E"></label>
+        <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Payment Sender Number</span>
+          <!-- entry ID: Sender number -->
+          <input class="input" type="tel" name="entry.XXXXXX10" placeholder="যে নম্বর থেকে পাঠিয়েছেন"></label>
+      </div>
+
+      <label class="block"><span class="block mb-1.5 text-sm text-slate-300">Cash Receiver Name (ক্যাশে পরিশোধ করলে)</span>
+        <!-- entry ID: Cash receiver -->
+        <input class="input" name="entry.XXXXXX11" placeholder="যার কাছে টাকা দিয়েছেন তার নাম"></label>
+
+      <button id="submit-btn" type="submit" class="btn w-full bg-emerald-500 text-slate-950 hover:shadow-[0_0_30px_rgba(16,185,129,.5)]">
+        <span id="submit-label">রেজিস্ট্রেশন জমা দিন</span>
+      </button>
+    </form>
+
+    <!-- SUCCESS MESSAGE: shown after submit; edit text -->
+    <div id="success" class="hidden text-center py-10">
+      <div class="mx-auto mb-5 w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center"><i data-lucide="check" class="w-8 h-8"></i></div>
+      <h3 class="text-2xl font-bold text-white">রেজিস্ট্রেশন সম্পন্ন হয়েছে!</h3>
+      <p class="mt-3 text-slate-400">আপনার তথ্য জমা হয়েছে। যাচাইয়ের পর আপনার সিট নিশ্চিত করা হবে।</p>
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 text-center text-sm text-slate-500">© 2026 রাঙ্গামাটি ও কাপ্তাই লেক ট্যুর</footer>
+
+<script>
+/* ================= CONFIG ================= */
+// PASTE YOUR GOOGLE FORM URL HERE (must end with /formResponse)
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+
+/* ================= TIMELINE DATA =================
+   time: badge text | icon: any Lucide icon name | text: card content
+   bg: Tailwind gradient classes for the card's ambient theme | tone: badge/icon color */
+const TIMELINE = [
+  {time:'রাত ১১:৩০', icon:'bus',        text:'সাভার টু সাভার রিজার্ভ বাস (নন-এসি)', bg:'from-indigo-900/50 to-slate-900/30', tone:'text-indigo-300'},
+  {time:'সকাল ০৭:৩০', icon:'sunrise',    text:'সকালের নাস্তা ২টি (ডিম খিচুড়ি)', bg:'from-amber-400/25 to-orange-500/10', tone:'text-amber-300'},
+  {time:'দুপুর ০১:৩০', icon:'utensils',   text:'দুপুরের খাবার ১টি (চিকেন/মাছ + ভর্তা + ডাল + সাদা ভাত)', bg:'from-yellow-300/20 to-sky-400/10', tone:'text-yellow-200'},
+  {time:'বিকেল ০৩:৩০', icon:'ship',       text:'কাপ্তাই লেকে বোট রাইড ও প্রয়োজনীয় এন্ট্রি ফি', bg:'from-cyan-500/25 to-teal-600/10', tone:'text-cyan-300'},
+  {time:'সন্ধ্যা ০৫:৪৫', icon:'sunset',     text:'তাঁবু বাস চলাকালীন সন্ধ্যায় হালকা নাস্তা', bg:'from-rose-500/25 to-orange-500/10', tone:'text-rose-300'},
+  {time:'রাত ০৯:০০', icon:'flame',      text:'রাতের খাবার (চিকেন বারবিকিউ + পরোটা ২ পিস + সালাদ অথবা সাদা ভাত + মুরগি + ডাল + আলু ভর্তা)', bg:'from-orange-600/30 to-red-900/20', tone:'text-orange-300'},
+  {time:'রাত ১১:০০', icon:'tent',       text:'এক রাত তাঁবু বাস (২ জন শেয়ারিং বেসিস)', bg:'from-violet-900/50 to-slate-900/30', tone:'text-violet-300'}
+];
+document.getElementById('timeline').innerHTML = TIMELINE.map((t,i)=>`
+  <!-- TIMELINE ITEM ${i+1}: ${t.time} -->
+  <li class="relative pl-14 md:pl-0 md:grid md:grid-cols-2 md:gap-14">
+    <span class="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-4 w-10 h-10 rounded-full bg-slate-950 border border-white/20 flex items-center justify-center ${t.tone}"><i data-lucide="${t.icon}" class="w-5 h-5"></i></span>
+    <div class="glass rounded-2xl p-5 bg-gradient-to-br ${t.bg} ${i%2 ? 'md:col-start-2' : 'md:col-start-1 md:text-right'}">
+      <span class="inline-block rounded-full bg-black/40 px-3 py-1 text-sm font-semibold ${t.tone}">${t.time}</span>
+      <p class="mt-3 text-lg text-slate-100">${t.text}</p>
+    </div>
+  </li>`).join('');
+
+/* ================= SPOTS DATA =================
+   img: replace with your photo URL | video: YouTube video ID (the part after ?v=) | desc: edit description */
+const SPOTS = [
+  {title:'পলওয়েল পার্ক', img:'https://picsum.photos/seed/spot1/900/700', video:'YOUR_VIDEO_ID', desc:'লেকের পাড়ে সাজানো সবুজ পার্ক, হাঁটাহাঁটি ও ছবি তোলার জন্য দারুণ।'},
+  {title:'রাঙ্গামাটি ঝুলন্ত ব্রিজ', img:'https://picsum.photos/seed/spot2/900/700', video:'YOUR_VIDEO_ID', desc:'লেকের ওপর দুলতে থাকা ব্রিজ, যেখান থেকে চারপাশের পাহাড় ও জল একসাথে দেখা যায়।'},
+  {title:'বৌদ্ধ মন্দির', img:'https://picsum.photos/seed/spot3/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড়ের কোলে শান্ত পরিবেশের মন্দির, স্থাপত্য আর নীরবতার অভিজ্ঞতা।'},
+  {title:'আদিবাসী বাজার', img:'https://picsum.photos/seed/spot4/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড়ি সংস্কৃতির হাতের কাজ, কাপড় ও স্থানীয় স্বাদ খুঁজে পাওয়ার জায়গা।'},
+  {title:'কাপ্তাই লেক', img:'https://picsum.photos/seed/spot5/900/700', video:'YOUR_VIDEO_ID', desc:'দেশের সবচেয়ে বড় কৃত্রিম হ্রদ, মেঘ আর পাহাড়ের প্রতিচ্ছবিতে ভরা।'},
+  {title:'কর্ণফুলী নদী', img:'https://picsum.photos/seed/spot6/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড় চিরে বয়ে চলা নদী, যার তীরেই কাপ্তাইয়ের ইতিহাস।'},
+  {title:'ছোট-বড় দ্বীপ', img:'https://picsum.photos/seed/spot7/900/700', video:'YOUR_VIDEO_ID', desc:'লেকের বুকে ছড়িয়ে থাকা ছোট-বড় সবুজ দ্বীপ, বোটে ঘুরে দেখার অনুভূতি আলাদা।'},
+  {title:'লাভ পয়েন্ট ও রুট ভিউ', img:'https://picsum.photos/seed/spot8/900/700', video:'YOUR_VIDEO_ID', desc:'সূর্যাস্তের আলোয় লেক আর পথের মনোরম দৃশ্য, সফরের শেষ বেলার স্মরণীয় মুহূর্ত।'}
+];
+// Sticky stacking: each card is position:sticky with a slightly larger `top`, so the next one slides over the previous.
+document.getElementById('cards').innerHTML = SPOTS.map((s,i)=>`
+  <!-- SPOT CARD ${i+1}: ${s.title} -->
+  <article class="sticky mb-8 rounded-3xl overflow-hidden bg-slate-900 border border-white/10 shadow-2xl grid md:grid-cols-2" style="top:${80+i*16}px">
+    <img src="${s.img}" alt="${s.title}" loading="lazy" class="w-full h-56 md:h-full object-cover ${i%2?'md:order-2':''}">
+    <div class="p-6 sm:p-9 flex flex-col justify-center">
+      <h3 class="text-2xl sm:text-3xl font-bold text-white">${s.title}</h3>
+      <p class="mt-3 text-slate-300 leading-relaxed">${s.desc}</p>
+      <button data-video="${s.video}" class="btn mt-6 self-start bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950"><i data-lucide="play" class="w-4 h-4"></i> View Video</button>
+    </div>
+  </article>`).join('');
+
+/* ================= VIDEO MODAL ================= */
+const modal = document.getElementById('video-modal'), frame = document.getElementById('video-frame');
+const closeModal = () => { modal.classList.add('hidden'); modal.classList.remove('flex'); frame.src = ''; };
+document.getElementById('cards').addEventListener('click', e => {
+  const b = e.target.closest('[data-video]'); if (!b) return;
+  frame.src = `https://www.youtube.com/embed/${b.dataset.video}?autoplay=1&rel=0`;
+  modal.classList.remove('hidden'); modal.classList.add('flex');
+});
+document.getElementById('video-close').onclick = closeModal;
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ================= TEAM DATA =================
+   To add member 2, 3, ... copy this sample line and paste it after the first one (keep the comma):
+   {name:'Member Name', title:'Role / Title', note:'Short note', img:''},
+   img: leave '' for the avatar placeholder, or paste a photo URL. */
+const TEAM = [
+  {name:'S. M. Redwan', title:'Course Teacher', note:'ট্যুরের সার্বিক তত্ত্বাবধান ও নির্দেশনা', img:''}
+  // ,{name:'Member 2', title:'Coordinator', note:'Role note here', img:''}
+  // ,{name:'Member 3', title:'Volunteer', note:'Role note here', img:''}
+];
+document.getElementById('team-grid').innerHTML = TEAM.map(m=>`
+  <!-- TEAM MEMBER: ${m.name} -->
+  <div class="glass rounded-3xl p-7 text-center ${TEAM.length===1?'sm:col-span-2 lg:col-span-3 max-w-sm mx-auto w-full':''}">
+    ${m.img ? `<img src="${m.img}" alt="${m.name}" class="w-24 h-24 rounded-full object-cover mx-auto">`
+            : `<div class="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500/40 to-teal-500/20 flex items-center justify-center mx-auto"><i data-lucide="user" class="w-10 h-10 text-emerald-200"></i></div>`}
+    <h3 class="mt-4 text-xl font-semibold text-white">${m.name}</h3>
+    <p class="text-emerald-300">${m.title}</p>
+    <p class="mt-2 text-sm text-slate-400">${m.note}</p>
+  </div>`).join('');
+
+/* ================= FORM SUBMIT ================= */
+const form = document.getElementById('booking-form');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn'), label = document.getElementById('submit-label');
+  btn.disabled = true; btn.classList.add('opacity-70');
+  label.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 inline animate-spin"></i> জমা হচ্ছে...'; lucide.createIcons();
+  try {
+    const formData = new FormData(form); // field names are the entry.xxxxxx IDs set in the HTML above
+    await fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
+    confetti({ particleCount: 160, spread: 80, origin: { y: .6 }, colors: ['#10b981','#14b8a6','#5eead4','#ffffff'] });
+    form.classList.add('hidden');
+    document.getElementById('success').classList.remove('hidden');
+    lucide.createIcons();
+  } catch (err) {
+    alert('জমা দেওয়া যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।');
+    btn.disabled = false; btn.classList.remove('opacity-70'); label.textContent = 'রেজিস্ট্রেশন জমা দিন';
+  }
+});
+
+lucide.createIcons();
+</script>
+</body>
+</html>
