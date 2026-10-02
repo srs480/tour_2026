@@ -304,7 +304,8 @@ const TEAM = [
 ];
 document.getElementById('team-grid').innerHTML = TEAM.map(m=>`
   <div class="glass rounded-3xl p-7 text-center ${TEAM.length===1?'sm:col-span-2 lg:col-span-3 max-w-sm mx-auto w-full':''}">
-    ${m.img ? `<img src="${m.img}" alt="${m.name}" class="w-24 h-24 rounded-full object-cover mx-auto">`
+    ${m.img ? `<img src="src/redwan_sir.webp
+" alt="${m.name}" class="w-24 h-24 rounded-full object-cover mx-auto">`
             : `<div class="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500/40 to-teal-500/20 flex items-center justify-center mx-auto"><i data-lucide="user" class="w-10 h-10 text-emerald-200"></i></div>`}
     <h3 class="mt-4 text-xl font-semibold text-white">${m.name}</h3>
     <p class="text-emerald-300">${m.title}</p>
