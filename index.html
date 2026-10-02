@@ -288,13 +288,21 @@ layout();
    img: replace with your photo URL | video: YouTube video ID (the part after ?v=) | desc: edit description */
 const SPOTS = [
  
-  {title:'রাঙ্গামাটি ঝুলন্ত ব্রিজ', img:'https://picsum.photos/seed/spot2/900/700', video:'YOUR_VIDEO_ID', desc:'লেকের ওপর দুলতে থাকা ব্রিজ, যেখান থেকে চারপাশের পাহাড় ও জল একসাথে দেখা যায়।'},
-  {title:'বৌদ্ধ মন্দির', img:'https://picsum.photos/seed/spot3/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড়ের কোলে শান্ত পরিবেশের মন্দির, স্থাপত্য আর নীরবতার অভিজ্ঞতা।'},
-  {title:'আদিবাসী বাজার', img:'https://picsum.photos/seed/spot4/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড়ি সংস্কৃতির হাতের কাজ, কাপড় ও স্থানীয় স্বাদ খুঁজে পাওয়ার জায়গা।'},
-  {title:'কাপ্তাই লেক', img:'https://picsum.photos/seed/spot5/900/700', video:'YOUR_VIDEO_ID', desc:'দেশের সবচেয়ে বড় কৃত্রিম হ্রদ, মেঘ আর পাহাড়ের প্রতিচ্ছবিতে ভরা।'},
-  {title:'কর্ণফুলী নদী', img:'https://picsum.photos/seed/spot6/900/700', video:'YOUR_VIDEO_ID', desc:'পাহাড় চিরে বয়ে চলা নদী, যার তীরেই কাপ্তাইয়ের ইতিহাস।'},
-  {title:'ছোট-বড় দ্বীপ', img:'https://picsum.photos/seed/spot7/900/700', video:'YOUR_VIDEO_ID', desc:'লেকের বুকে ছড়িয়ে থাকা ছোট-বড় সবুজ দ্বীপ, বোটে ঘুরে দেখার অনুভূতি আলাদা।'},
-  {title:'লাভ পয়েন্ট ও রুট ভিউ', img:'https://picsum.photos/seed/spot8/900/700', video:'YOUR_VIDEO_ID', desc:'সূর্যাস্তের আলোয় লেক আর পথের মনোরম দৃশ্য, সফরের শেষ বেলার স্মরণীয় মুহূর্ত।'}
+  {title:'পলওয়েল পার্ক', img:'src/Polwel-Park-Rangamati.webp', video:'YOUR_VIDEO_ID', desc:'লেকের পাড়ে সাজানো সবুজ পার্ক, হাঁটাহাঁটি ও ছবি তোলার জন্য দারুণ।'},
+
+  {title:'রাঙ্গামাটি ঝুলন্ত ব্রিজ', img:'src/rangamati-hangende-brug-chittagong-bangladesh-over-het-meer-van-kaptai-mijlpaal-304063787.jpg', video:'YOUR_VIDEO_ID', desc:'লেকের ওপর দুলতে থাকা ব্রিজ, যেখান থেকে চারপাশের পাহাড় ও জল একসাথে দেখা যায়।'},
+
+  {title:'বৌদ্ধ মন্দির', img:'src/Buddhist_Temple_at_Rangamati.webp', video:'YOUR_VIDEO_ID', desc:'পাহাড়ের কোলে শান্ত পরিবেশের মন্দির, স্থাপত্য আর নীরবতার অভিজ্ঞতা।'},
+
+  {title:'আদিবাসী বাজার', img:'src/image-72110-1671950106.jpg', video:'YOUR_VIDEO_ID', desc:'পাহাড়ি সংস্কৃতির হাতের কাজ, কাপড় ও স্থানীয় স্বাদ খুঁজে পাওয়ার জায়গা।'},
+
+  {title:'কাপ্তাই লেক', img:'src/dip_rangamati.webp', video:'YOUR_VIDEO_ID', desc:'দেশের সবচেয়ে বড় কৃত্রিম হ্রদ, মেঘ আর পাহাড়ের প্রতিচ্ছবিতে ভরা।'},
+
+  {title:'কর্ণফুলী নদী', img:'src/Karnafully_River_to_Bay_of_Bengal_(16471666352).webp', video:'YOUR_VIDEO_ID', desc:'পাহাড় চিরে বয়ে চলা নদী, যার তীরেই কাপ্তাইয়ের ইতিহাস।'},
+
+  {title:'ছোট-বড় দ্বীপ', img:'src/dip-rangamati.webp', video:'YOUR_VIDEO_ID', desc:'লেকের বুকে ছড়িয়ে থাকা ছোট-বড় সবুজ দ্বীপ, বোটে ঘুরে দেখার অনুভূতি আলাদা।'},
+
+  {title:'লাভ পয়েন্ট ও রুট ভিউ', img:'src/love-point.webp', video:'YOUR_VIDEO_ID', desc:'সূর্যাস্তের আলোয় লেক 
 ];
 // Sticky stacking: each card is position:sticky with a slightly larger `top`, so the next one slides over the previous.
 document.getElementById('cards').innerHTML = SPOTS.map((s,i)=>`
