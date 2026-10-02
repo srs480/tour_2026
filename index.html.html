@@ -300,7 +300,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 /* ================= TEAM DATA ================= */
 const TEAM = [
-    {name:'S. M. Redwan', title:'Course Teacher', note:'ট্যুরের সার্বিক তত্ত্বাবধান ও নির্দেশনা', img:'src/redwan_sir.webp'}
+    {name:'S. M. Redwan', title:'Course Teacher', note:'ট্যুরের সার্বিক তত্ত্বাবধান ও নির্দেশনা', img:'src/redwan_sir.webp'},
+      {name:'GM Kamran', title:'Management', note:'এখানে ছোট একটি নোট লেখো', img:'src/redwan_sir.webp'}
 ];
 document.getElementById('team-grid').innerHTML = TEAM.map(m=>`
   <div class="glass rounded-3xl p-7 text-center ${TEAM.length===1?'sm:col-span-2 lg:col-span-3 max-w-sm mx-auto w-full':''}">
